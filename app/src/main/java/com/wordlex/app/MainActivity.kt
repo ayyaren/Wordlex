@@ -19,6 +19,7 @@ import com.wordlex.app.ui.theme.WordlexTheme
 import com.wordlex.app.ui.word.AddWordScreen
 import com.wordlex.app.ui.word.WordListScreen
 import com.wordlex.app.ui.quiz.QuizScreen
+import com.wordlex.app.ui.settings.SettingsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +60,9 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onQuizClick = {
                                     navController.navigate("quiz/$userId")
+                                },
+                                onSettingsClick = {
+                                    navController.navigate("settings/$userId")
                                 }
                             )
                         }
@@ -102,6 +106,17 @@ class MainActivity : ComponentActivity() {
                                 userId = userId,
                                 onBackClick = { navController.popBackStack() },
                                 onQuizFinished = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable(
+                            route = "settings/{userId}",
+                            arguments = listOf(navArgument("userId") { type = NavType.LongType })
+                        ) { backStackEntry ->
+                            val userId = backStackEntry.arguments?.getLong("userId") ?: 0L
+                            SettingsScreen(
+                                userId = userId,
+                                onBackClick = { navController.popBackStack() }
                             )
                         }
                     }
