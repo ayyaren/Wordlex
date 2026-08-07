@@ -128,7 +128,12 @@ class MainActivity : ComponentActivity() {
                             val userId = backStackEntry.arguments?.getLong("userId") ?: 0L
                             SettingsScreen(
                                 userId = userId,
-                                onBackClick = { navController.popBackStack() }
+                                onBackClick = { navController.popBackStack() },
+                                onLogout = {
+                                    navController.navigate("auth") {
+                                        popUpTo(0) { inclusive = true }
+                                    }
+                                }
                             )
                         }
 
