@@ -22,6 +22,7 @@ import com.wordlex.app.ui.quiz.QuizScreen
 import com.wordlex.app.ui.settings.SettingsScreen
 import com.wordlex.app.ui.report.ReportScreen
 import com.wordlex.app.ui.wordle.WordleScreen
+import com.wordlex.app.ui.wordchain.WordChainScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +72,9 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onWordleClick = {
                                     navController.navigate("wordle/$userId")
+                                },
+                                onWordChainClick = {
+                                    navController.navigate("wordchain/$userId")
                                 }
                             )
                         }
@@ -145,6 +149,17 @@ class MainActivity : ComponentActivity() {
                         ) { backStackEntry ->
                             val userId = backStackEntry.arguments?.getLong("userId") ?: 0L
                             WordleScreen(
+                                userId = userId,
+                                onBackClick = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable(
+                            route = "wordchain/{userId}",
+                            arguments = listOf(navArgument("userId") { type = NavType.LongType })
+                        ) { backStackEntry ->
+                            val userId = backStackEntry.arguments?.getLong("userId") ?: 0L
+                            WordChainScreen(
                                 userId = userId,
                                 onBackClick = { navController.popBackStack() }
                             )
